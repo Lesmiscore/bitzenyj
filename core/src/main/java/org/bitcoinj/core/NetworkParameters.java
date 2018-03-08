@@ -149,7 +149,7 @@ public abstract class NetworkParameters {
     /**
      * The maximum number of coins to be generated
      */
-    public static final long MAX_COINS = 21000000;
+    public static final long MAX_COINS = 250_000_000;
 
     /**
      * The maximum money to be generated
@@ -203,9 +203,7 @@ public abstract class NetworkParameters {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        return getId().equals(((NetworkParameters)o).getId());
+        return this == o || o != null && getClass() == o.getClass() && getId().equals(((NetworkParameters) o).getId());
     }
 
     @Override
@@ -216,32 +214,34 @@ public abstract class NetworkParameters {
     /** Returns the network parameters for the given string ID or NULL if not recognized. */
     @Nullable
     public static NetworkParameters fromID(String id) {
-        if (id.equals(ID_MAINNET)) {
-            return MainNetParams.get();
-        } else if (id.equals(ID_TESTNET)) {
-            return TestNet3Params.get();
-        } else if (id.equals(ID_UNITTESTNET)) {
-            return UnitTestParams.get();
-        } else if (id.equals(ID_REGTEST)) {
-            return RegTestParams.get();
-        } else {
-            return null;
+        switch (id) {
+            case ID_MAINNET:
+                return MainNetParams.get();
+            case ID_TESTNET:
+                return TestNet3Params.get();
+            case ID_UNITTESTNET:
+                return UnitTestParams.get();
+            case ID_REGTEST:
+                return RegTestParams.get();
+            default:
+                return null;
         }
     }
 
     /** Returns the network parameters for the given string paymentProtocolID or NULL if not recognized. */
     @Nullable
     public static NetworkParameters fromPmtProtocolID(String pmtProtocolId) {
-        if (pmtProtocolId.equals(PAYMENT_PROTOCOL_ID_MAINNET)) {
-            return MainNetParams.get();
-        } else if (pmtProtocolId.equals(PAYMENT_PROTOCOL_ID_TESTNET)) {
-            return TestNet3Params.get();
-        } else if (pmtProtocolId.equals(PAYMENT_PROTOCOL_ID_UNIT_TESTS)) {
-            return UnitTestParams.get();
-        } else if (pmtProtocolId.equals(PAYMENT_PROTOCOL_ID_REGTEST)) {
-            return RegTestParams.get();
-        } else {
-            return null;
+        switch (pmtProtocolId) {
+            case PAYMENT_PROTOCOL_ID_MAINNET:
+                return MainNetParams.get();
+            case PAYMENT_PROTOCOL_ID_TESTNET:
+                return TestNet3Params.get();
+            case PAYMENT_PROTOCOL_ID_UNIT_TESTS:
+                return UnitTestParams.get();
+            case PAYMENT_PROTOCOL_ID_REGTEST:
+                return RegTestParams.get();
+            default:
+                return null;
         }
     }
 
